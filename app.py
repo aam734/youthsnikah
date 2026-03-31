@@ -11,31 +11,42 @@ DB_PATH = "database/data.db"
 def home():
     return render_template("index.html")
 
-# REGISTER
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        data = (
-            request.form['full_name'],
-            request.form['birth_year'],
-            request.form['email'],
-            request.form['phone'],
-            request.form['password']
-        )
+        full_name = request.form['full_name']
+        birth_year = request.form['birth_year']
+        email = request.form['email']
+        phone = request.form['phone']
+        password = request.form['password']
 
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
+
+        # CHECK DUPLICATE EMAIL
+        c.execute("SELECT id FROM users WHERE email=?", (email,))
+        if c.fetchone():
+            conn.close()
+            return "Email already exists!"
+
+        # OPTIONAL: CHECK DUPLICATE PHONE
+        c.execute("SELECT id FROM users WHERE phone=?", (phone,))
+        if c.fetchone():
+            conn.close()
+            return "Phone number already exists!"
+
+        # INSERT USER
         c.execute("""
             INSERT INTO users (full_name, birth_year, email, phone, password)
             VALUES (?, ?, ?, ?, ?)
-        """, data)
+        """, (full_name, birth_year, email, phone, password))
+
         conn.commit()
         conn.close()
 
         return redirect('/login')
 
     return render_template("register.html")
-
 # LOGIN
 @app.route('/login', methods=['GET', 'POST'])
 def login():

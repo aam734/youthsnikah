@@ -1,12 +1,12 @@
-<h2>Spouse Profile</h2>
+<h2>Public Spouse Profiles</h2>
 
-<p><b>Profile ID:</b> {{ biodata['profile_id'] }}</p>
-<p><b>Gender:</b> {{ biodata['gender'] }}</p>
-<p><b>District:</b> {{ biodata['district'] }}</p>
-<p><b>Age:</b> {{ biodata['current_age'] }}</p>
+{% for p in profiles %}
+<div style="border:1px solid black; padding:10px; margin:10px;">
+    <p><b>ID:</b> {{ p['profile_id'] }}</p>
+    <p>Gender: {{ p['gender'] }}</p>
+    <p>District: {{ p['district'] }}</p>
+    <p>Age: {{ p['current_age'] }}</p>
 
-<p><b>About:</b> {{ biodata['about_yourself'] }}</p>
-
-<hr>
-
-<p><b>Guardian aware of publishing:</b> {{ biodata['guardian_publish'] }}</p>
+    <a href="/profile/{{ p['profile_id'] }}">View Full Profile</a>
+</div>
+{% endfor %}

@@ -116,6 +116,11 @@ def update_account():
 import random
 import string
 
+def generate_profile_id():
+    letters = ''.join(random.choices(string.ascii_uppercase, k=6))
+    digits = ''.join(random.choices(string.digits, k=10))
+    return letters + digits
+
 # BIODATA ( FIXED )
 @app.route('/biodata', methods=['GET', 'POST'])
 def biodata():
@@ -132,7 +137,11 @@ def biodata():
 
     if request.method == 'POST':
         try:
-            profile_id = existing['profile_id'] if existing else ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+            while True:
+                profile_id = generate_profile_id()
+                c.execute("SELECT 1 FROM biodata WHERE profile_id=?", (profile_id,))
+                if not c.fetchone():
+                    break
 
             form = request.form
 

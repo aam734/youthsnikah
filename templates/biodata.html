@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bio Data - YouthsNikah</title>
-
+    <title>Bio Data Form - YouthsNikah</title>
     <style>
+        fieldset { margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; }
+        legend { font-weight: bold; }
+        label { display:block; margin-top:8px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 5px; margin-top:4px; }
         .step { display: none; }
         .step.active { display: block; }
 
@@ -20,6 +23,7 @@
             background: green;
             text-align: center;
             color: white;
+            line-height: 20px;
         }
 
         button { margin-top: 15px; }
@@ -33,74 +37,236 @@
     <div class="progress" id="progress">0%</div>
 </div>
 
-<form method="POST" id="form">
+<form method="POST">
 
-<!-- STEP 1 -->
+<!-- STEP 1: Basic Information -->
 <div class="step active">
-    <h3>Basic Information</h3>
+    <fieldset>
+        <legend>Basic Information</legend>
+        <label>Gender:</label>
+        <select name="gender" required>
+            <option value="">Select</option>
+            <option value="Male" {{ 'selected' if biodata and biodata['gender']=='Male' else '' }}>Male</option>
+            <option value="Female" {{ 'selected' if biodata and biodata['gender']=='Female' else '' }}>Female</option>
+        </select>
 
-    <input name="gender" placeholder="Gender" value="{{ biodata['gender'] if biodata else '' }}">
-    <input name="district" placeholder="District" value="{{ biodata['district'] if biodata else '' }}">
-    <input name="current_age" placeholder="Age" value="{{ biodata['current_age'] if biodata else '' }}">
-    <input name="marital_status" placeholder="Marital Status" value="{{ biodata['marital_status'] if biodata else '' }}">
+        <label>District:</label>
+        <input type="text" name="district" value="{{ biodata['district'] if biodata else '' }}" required>
+
+        <label>Current Age:</label>
+        <input type="number" name="current_age" value="{{ biodata['current_age'] if biodata else '' }}" required>
+
+        <label>Marital Status:</label>
+        <select name="marital_status" required>
+            <option value="">Select</option>
+            <option value="Single" {{ 'selected' if biodata and biodata['marital_status']=='Single' else '' }}>Single</option>
+            <option value="Divorced" {{ 'selected' if biodata and biodata['marital_status']=='Divorced' else '' }}>Divorced</option>
+            <option value="Widow/Widower" {{ 'selected' if biodata and biodata['marital_status']=='Widow/Widower' else '' }}>Widow/Widower</option>
+        </select>
+    </fieldset>
 
     <button type="button" onclick="nextStep()">Next</button>
 </div>
 
-<!-- STEP 2 -->
+<!-- STEP 2: Personal Information -->
 <div class="step">
-    <h3>Personal Information</h3>
+    <fieldset>
+        <legend>Personal Information</legend>
+        <label>Father's Occupation / Status:</label>
+        <input type="text" name="father_occupation" value="{{ biodata['father_occupation'] if biodata else '' }}">
 
-    <input name="father_occupation" placeholder="Father" value="{{ biodata['father_occupation'] if biodata else '' }}">
-    <input name="mother_occupation" placeholder="Mother" value="{{ biodata['mother_occupation'] if biodata else '' }}">
-    <textarea name="current_address">{{ biodata['current_address'] if biodata else '' }}</textarea>
+        <label>Mother's Occupation / Status:</label>
+        <input type="text" name="mother_occupation" value="{{ biodata['mother_occupation'] if biodata else '' }}">
+
+        <label>Permanent Address:</label>
+        <textarea name="permanent_address">{{ biodata['permanent_address'] if biodata else '' }}</textarea>
+
+        <label>Current Address:</label>
+        <textarea name="current_address">{{ biodata['current_address'] if biodata else '' }}</textarea>
+
+        <label>Date of Birth:</label>
+        <input type="date" name="date_of_birth" value="{{ biodata['date_of_birth'] if biodata else '' }}">
+
+        <label>Height:</label>
+        <input type="text" name="height" value="{{ biodata['height'] if biodata else '' }}">
+
+        <label>Weight:</label>
+        <input type="text" name="weight" value="{{ biodata['weight'] if biodata else '' }}">
+
+        <label>Blood Group:</label>
+        <input type="text" name="blood_group" value="{{ biodata['blood_group'] if biodata else '' }}">
+
+        <label>Skin Tone:</label>
+        <input type="text" name="skin_tone" value="{{ biodata['skin_tone'] if biodata else '' }}">
+
+        <label>Educational Qualification:</label>
+        <input type="text" name="educational_qualification" value="{{ biodata['educational_qualification'] if biodata else '' }}">
+
+        <label>Profession:</label>
+        <input type="text" name="profession" value="{{ biodata['profession'] if biodata else '' }}">
+
+        <label>Political View:</label>
+        <input type="text" name="political_view" value="{{ biodata['political_view'] if biodata else '' }}">
+
+        <label>Religion:</label>
+        <input type="text" name="religion" value="{{ biodata['religion'] if biodata else '' }}">
+
+        <label>About Yourself:</label>
+        <textarea name="about_yourself">{{ biodata['about_yourself'] if biodata else '' }}</textarea>
+    </fieldset>
 
     <button type="button" onclick="prevStep()">Back</button>
     <button type="button" onclick="nextStep()">Next</button>
 </div>
 
-<!-- STEP 3 -->
+<!-- STEP 3: Family Information -->
 <div class="step">
-    <h3>Family Info</h3>
+    <fieldset>
+        <legend>Family Information</legend>
+        <label>Financial Status:</label>
+        <input type="text" name="financial_status" value="{{ biodata['financial_status'] if biodata else '' }}">
 
-    <textarea name="brothers">{{ biodata['brothers'] if biodata else '' }}</textarea>
-    <textarea name="sisters">{{ biodata['sisters'] if biodata else '' }}</textarea>
+        <label>Social Status:</label>
+        <input type="text" name="social_status" value="{{ biodata['social_status'] if biodata else '' }}">
+
+        <label>Brothers (JSON/Text format):</label>
+        <textarea name="brothers">{{ biodata['brothers'] if biodata else '' }}</textarea>
+
+        <label>Sisters (JSON/Text format):</label>
+        <textarea name="sisters">{{ biodata['sisters'] if biodata else '' }}</textarea>
+
+        <label>Paternal Uncles (JSON/Text format):</label>
+        <textarea name="paternal_uncles">{{ biodata['paternal_uncles'] if biodata else '' }}</textarea>
+
+        <label>Maternal Uncles (JSON/Text format):</label>
+        <textarea name="maternal_uncles">{{ biodata['maternal_uncles'] if biodata else '' }}</textarea>
+    </fieldset>
 
     <button type="button" onclick="prevStep()">Back</button>
     <button type="button" onclick="nextStep()">Next</button>
 </div>
 
-<!-- STEP 4 -->
+<!-- STEP 4: Religious & Lifestyle -->
 <div class="step">
-    <h3>Religious</h3>
+    <fieldset>
+        <legend>Religious & Lifestyle</legend>
 
-    <input name="prayers_five_times" placeholder="Prays 5 times" value="{{ biodata['prayers_five_times'] if biodata else '' }}">
-    <input name="can_recite_quran" placeholder="Quran" value="{{ biodata['can_recite_quran'] if biodata else '' }}">
+        <label>View on Marriage:</label>
+        <input type="text" name="view_on_marriage" value="{{ biodata['view_on_marriage'] if biodata else '' }}">
+
+        <label>Maintains Fardh Covering:</label>
+        <select name="fardh_covering">
+            <option value="">Select</option>
+            <option value="Y" {{ 'selected' if biodata and biodata['fardh_covering']=='Y' else '' }}>Y</option>
+            <option value="N" {{ 'selected' if biodata and biodata['fardh_covering']=='N' else '' }}>N</option>
+        </select>
+
+        <label>Maintains Distance from Non-Mahram:</label>
+        <select name="distance_non_mahrams">
+            <option value="">Select</option>
+            <option value="Y" {{ 'selected' if biodata and biodata['distance_non_mahrams']=='Y' else '' }}>Y</option>
+            <option value="N" {{ 'selected' if biodata and biodata['distance_non_mahrams']=='N' else '' }}>N</option>
+            <option value="I" {{ 'selected' if biodata and biodata['distance_non_mahrams']=='I' else '' }}>Improvement needed</option>
+        </select>
+
+        <label>Has Sunnah Beard:</label>
+        <select name="sunnah_beard">
+            <option value="">Select</option>
+            <option value="Y" {{ 'selected' if biodata and biodata['sunnah_beard']=='Y' else '' }}>Y</option>
+            <option value="N" {{ 'selected' if biodata and biodata['sunnah_beard']=='N' else '' }}>N</option>
+        </select>
+
+        <label>Watches TV / Listens to Music:</label>
+        <select name="tv_music">
+            <option value="">Select</option>
+            <option value="Y" {{ 'selected' if biodata and biodata['tv_music']=='Y' else '' }}>Y</option>
+            <option value="N" {{ 'selected' if biodata and biodata['tv_music']=='N' else '' }}>N</option>
+            <option value="I" {{ 'selected' if biodata and biodata['tv_music']=='I' else '' }}>Improvement needed</option>
+        </select>
+
+        <label>Can Recite Qur'an:</label>
+        <select name="can_recite_quran">
+            <option value="">Select</option>
+            <option value="Y" {{ 'selected' if biodata and biodata['can_recite_quran']=='Y' else '' }}>Y</option>
+            <option value="N" {{ 'selected' if biodata and biodata['can_recite_quran']=='N' else '' }}>N</option>
+            <option value="I" {{ 'selected' if biodata and biodata['can_recite_quran']=='I' else '' }}>Improvement needed</option>
+        </select>
+
+        <label>Any Physical or Mental Conditions:</label>
+        <select name="physical_mental_conditions">
+            <option value="">Select</option>
+            <option value="Y" {{ 'selected' if biodata and biodata['physical_mental_conditions']=='Y' else '' }}>Y</option>
+            <option value="N" {{ 'selected' if biodata and biodata['physical_mental_conditions']=='N' else '' }}>N</option>
+        </select>
+
+        <label>Prays Five Times Daily:</label>
+        <select name="prayers_five_times">
+            <option value="">Select</option>
+            <option value="Y" {{ 'selected' if biodata and biodata['prayers_five_times']=='Y' else '' }}>Y</option>
+            <option value="N" {{ 'selected' if biodata and biodata['prayers_five_times']=='N' else '' }}>N</option>
+        </select>
+
+        <label>Involved in Religious Work:</label>
+        <select name="religious_work">
+            <option value="">Select</option>
+            <option value="Y" {{ 'selected' if biodata and biodata['religious_work']=='Y' else '' }}>Y</option>
+            <option value="N" {{ 'selected' if biodata and biodata['religious_work']=='N' else '' }}>N</option>
+        </select>
+    </fieldset>
 
     <button type="button" onclick="prevStep()">Back</button>
     <button type="button" onclick="nextStep()">Next</button>
 </div>
 
-<!-- STEP 5 -->
+<!-- STEP 5: Spouse Expectations -->
 <div class="step">
-    <h3>Spouse Expectations</h3>
-
-    <input name="spouse_age" placeholder="Age" value="{{ biodata['spouse_age'] if biodata else '' }}">
-    <input name="spouse_district" placeholder="District" value="{{ biodata['spouse_district'] if biodata else '' }}">
+    <fieldset>
+        <legend>Spouse Expectations</legend>
+        <label>Age:</label>
+        <input type="text" name="spouse_age" value="{{ biodata['spouse_age'] if biodata else '' }}">
+        <label>Skin Tone:</label>
+        <input type="text" name="spouse_skin_tone" value="{{ biodata['spouse_skin_tone'] if biodata else '' }}">
+        <label>Height:</label>
+        <input type="text" name="spouse_height" value="{{ biodata['spouse_height'] if biodata else '' }}">
+        <label>Weight:</label>
+        <input type="text" name="spouse_weight" value="{{ biodata['spouse_weight'] if biodata else '' }}">
+        <label>Educational Qualification:</label>
+        <input type="text" name="spouse_education" value="{{ biodata['spouse_education'] if biodata else '' }}">
+        <label>District:</label>
+        <input type="text" name="spouse_district" value="{{ biodata['spouse_district'] if biodata else '' }}">
+        <label>Current Address:</label>
+        <textarea name="spouse_address">{{ biodata['spouse_address'] if biodata else '' }}</textarea>
+        <label>Profession:</label>
+        <input type="text" name="spouse_profession" value="{{ biodata['spouse_profession'] if biodata else '' }}">
+        <label>Special Qualities:</label>
+        <textarea name="spouse_special_qualities">{{ biodata['spouse_special_qualities'] if biodata else '' }}</textarea>
+    </fieldset>
 
     <button type="button" onclick="prevStep()">Back</button>
     <button type="button" onclick="nextStep()">Next</button>
 </div>
 
-<!-- STEP 6 -->
+<!-- STEP 6: Guardian -->
 <div class="step">
-    <h3>Guardian</h3>
+    <fieldset>
+        <legend>Guardian Awareness</legend>
+        <label>Does your guardian know about marriage?</label>
+        <select name="guardian_marriage">
+            <option value="">Select</option>
+            <option value="Y" {{ 'selected' if biodata and biodata['guardian_marriage']=='Y' else '' }}>Y</option>
+            <option value="N" {{ 'selected' if biodata and biodata['guardian_marriage']=='N' else '' }}>N</option>
+        </select>
 
-    <input name="guardian_marriage" placeholder="Marriage Awareness" value="{{ biodata['guardian_marriage'] if biodata else '' }}">
-    <input name="guardian_publish" placeholder="Publish Awareness" value="{{ biodata['guardian_publish'] if biodata else '' }}">
+        <label>Does your guardian know about publishing your biodata?</label>
+        <select name="guardian_publish">
+            <option value="">Select</option>
+            <option value="Y" {{ 'selected' if biodata and biodata['guardian_publish']=='Y' else '' }}>Y</option>
+            <option value="N" {{ 'selected' if biodata and biodata['guardian_publish']=='N' else '' }}>N</option>
+        </select>
+    </fieldset>
 
     <button type="button" onclick="prevStep()">Back</button>
-    <button type="submit">Submit</button>
+    <button type="submit">Save Bio Data</button>
 </div>
 
 </form>
@@ -114,7 +280,6 @@ function showStep(n) {
         step.classList.remove("active");
         if (i === n) step.classList.add("active");
     });
-
     updateProgress();
 }
 

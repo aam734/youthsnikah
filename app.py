@@ -225,7 +225,7 @@ def view_biodata():
     conn.close()
     return render_template("view_biodata.html", biodata=data)
 
-# PUBLIC PROFILE
+# PROFILE
 @app.route('/profile/<profile_id>')
 def profile(profile_id):
     conn = sqlite3.connect(DB_PATH)

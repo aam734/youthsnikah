@@ -209,5 +209,22 @@ def biodata():
 
     return render_template("biodata.html", biodata=existing)
 
+# VIEW BIODATA
+@app.route('/view_biodata')
+def view_biodata():
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM biodata WHERE user_id=?", (session['user_id'],))
+    data = c.fetchone()
+
+    conn.close()
+    return render_template("view_biodata.html", biodata=data)
+
+# LAST PORTION
 if __name__ == '__main__':
     app.run(debug=True)

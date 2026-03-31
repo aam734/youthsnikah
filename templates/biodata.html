@@ -31,6 +31,52 @@
 </head>
 <body>
 
+<script>
+    function nextStep() {
+    if (!validateStep(currentStep)) return; // Step validation
+
+    // Gather current step form data
+    const stepFields = steps[currentStep].querySelectorAll("input, select, textarea");
+    let formData = {};
+    stepFields.forEach(f => formData[f.name] = f.value);
+
+    // Send to server via fetch
+    fetch('/save_biodata_step', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(formData)
+    });
+
+    // Move to next step
+    if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+    }
+}
+    function updateProgress() {
+    const allFields = document.querySelectorAll("input, select, textarea");
+    let filled = 0;
+    allFields.forEach(f => {
+        if (f.value && f.value.trim() !== "") filled++;
+    });
+    let percent = Math.round((filled / allFields.length) * 100);
+    const bar = document.getElementById("progress");
+    bar.style.width = percent + "%";
+    bar.innerText = percent + "%";
+}
+    function validateStep(stepIndex) {
+    const stepFields = steps[stepIndex].querySelectorAll("input[required], select[required], textarea[required]");
+    for (let f of stepFields) {
+        if (!f.value || f.value.trim() === "") {
+            alert(`Please fill the field: ${f.name}`);
+            f.focus();
+            return false;
+        }
+    }
+    return true;
+}
+</script>
+
 <h2>Spouse Profile (Step Form)</h2>
 
 <div class="progress-bar">

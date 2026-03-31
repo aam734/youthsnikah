@@ -48,7 +48,7 @@ def login():
 
         c.execute("""
             SELECT * FROM users 
-            WHERE (email=? OR phone=?) AND password=?
+            WHERE email=? AND password=?
         """, (login, login, password))
 
         user = c.fetchone()

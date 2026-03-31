@@ -1,5 +1,25 @@
+<h2>Your Profile</h2>
+
+{% if biodata %}
+<p><b>Profile ID:</b> {{ biodata['profile_id'] }}</p>
+
+<!-- Button to copy & open profile -->
+<td>
+  <button onclick="openProfile('{{ biodata['profile_id'] }}')">
+    {{ biodata['profile_id'] }}
+  </button>
+</td>
+
+<p><b>Gender:</b> {{ biodata['gender'] }}</p>
+<p><b>District:</b> {{ biodata['district'] }}</p>
+<p><b>Age:</b> {{ biodata['current_age'] }}</p>
+
+<a href="/biodata">Edit Profile</a>
+<br><br>
+<a href="/dashboard">Back to Dashboard</a>
+
 <script>
-function openProfile(id) {
+function openProfile(profile_id) {
     const url = `${window.location.origin}/profile/${profile_id}`;
     
     // Copy to clipboard
@@ -12,18 +32,6 @@ function openProfile(id) {
 }
 </script>
 
-<h2>Your Profile</h2>
-
-{% if biodata %}
-<p><b>Profile ID:</b> {{ biodata['profile_id'] }}</p>
-  <td><button onclick="openProfile('{{ profile_id }}')">{{ profile_id }}</button></td>
-<p><b>Gender:</b> {{ biodata['gender'] }}</p>
-<p><b>District:</b> {{ biodata['district'] }}</p>
-<p><b>Age:</b> {{ biodata['current_age'] }}</p>
-
-<a href="/biodata">Edit Profile</a>
-<br><br>
-<a href="/dashboard">Back to Dashboard</a>
 {% else %}
 <p>No biodata found.</p>
 <a href="/biodata">Create Now</a>

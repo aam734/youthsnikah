@@ -1,10 +1,6 @@
-<td>
-  <button onclick="openProfile('{{ profile_id }}')">{{ profile_id }}</button>
-</td>
-
 <script>
 function openProfile(id) {
-    const url = `${window.location.origin}/profile/${id}`;
+    const url = `${window.location.origin}/profile/${profile_id}`;
     
     // Copy to clipboard
     navigator.clipboard.writeText(url).then(() => {
@@ -20,6 +16,7 @@ function openProfile(id) {
 
 {% if biodata %}
 <p><b>Profile ID:</b> {{ biodata['profile_id'] }}</p>
+  <td><button onclick="openProfile('{{ profile_id }}')">{{ profile_id }}</button></td>
 <p><b>Gender:</b> {{ biodata['gender'] }}</p>
 <p><b>District:</b> {{ biodata['district'] }}</p>
 <p><b>Age:</b> {{ biodata['current_age'] }}</p>

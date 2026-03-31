@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<h2>Dashboard</h2>
+
+<nav>
+    <a href="/dashboard">Account</a> |
+    <a href="/biodata">Bio Data</a> |
+    <a href="/logout">Logout</a>
+</nav>
+
+<hr>
+
+<h3>Account Information</h3>
+
+<p><strong>Full Name:</strong> {{ user[1] }}</p>
+<p><strong>Birth Year:</strong> {{ user[2] }}</p>
+
+<form method="POST" action="/update_account">
+
+    <label>Email:</label><br>
+    <input type="email" name="email" value="{{ user[3] }}"><br><br>
+
+    <label>Phone Number:</label><br>
+    <input type="text" name="phone" value="{{ user[4] }}"><br><br>
+
+    <label>New Password:</label><br>
+    <input type="password" name="password"><br><br>
+
+    <button type="submit">Update</button>
+</form>
+
+</body>
+</html>

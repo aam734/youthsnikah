@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bio Data Form - YouthsNikah</title>
+    <style>
+        fieldset { margin-bottom: 20px; padding: 15px; }
+        legend { font-weight: bold; }
+        label { display:block; margin-top:8px; }
+        input, select, textarea { width: 100%; padding: 5px; margin-top:4px; }
+    </style>
+</head>
+<body>
+
+<h2>Spouse Profile (Bio Data)</h2>
+
+<form method="POST">
+
+<fieldset>
+    <legend>Basic Information</legend>
+    <label>Gender:</label>
+    <select name="gender" required>
+        <option value="">Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
+
+    <label>District:</label>
+    <input type="text" name="district" required>
+
+    <label>Current Age:</label>
+    <input type="number" name="current_age" required>
+
+    <label>Marital Status:</label>
+    <select name="marital_status" required>
+        <option value="">Select</option>
+        <option value="Single">Single</option>
+        <option value="Divorced">Divorced</option>
+        <option value="Widow/Widower">Widow/Widower</option>
+    </select>
+</fieldset>
+
+<fieldset>
+    <legend>Personal Information</legend>
+    <label>Father's Occupation / Status:</label>
+    <input type="text" name="father_occupation">
+
+    <label>Mother's Occupation / Status:</label>
+    <input type="text" name="mother_occupation">
+
+    <label>Permanent Address:</label>
+    <textarea name="permanent_address"></textarea>
+
+    <label>Current Address:</label>
+    <textarea name="current_address"></textarea>
+
+    <label>Date of Birth:</label>
+    <input type="date" name="date_of_birth">
+
+    <label>Height:</label>
+    <input type="text" name="height">
+
+    <label>Weight:</label>
+    <input type="text" name="weight">
+
+    <label>Blood Group:</label>
+    <input type="text" name="blood_group">
+
+    <label>Skin Tone:</label>
+    <input type="text" name="skin_tone">
+
+    <label>Educational Qualification:</label>
+    <input type="text" name="educational_qualification">
+
+    <label>Profession:</label>
+    <input type="text" name="profession">
+
+    <label>Political View:</label>
+    <input type="text" name="political_view">
+
+    <label>Religion:</label>
+    <input type="text" name="religion">
+
+    <label>About Yourself:</label>
+    <textarea name="about_yourself"></textarea>
+</fieldset>
+
+<fieldset>
+    <legend>Family Information</legend>
+    <label>Financial Status:</label>
+    <input type="text" name="financial_status">
+
+    <label>Social Status:</label>
+    <input type="text" name="social_status">
+
+    <label>Brothers (JSON/Text format):</label>
+    <textarea name="brothers" placeholder='[{"name":"X","education":"X","profession":"X","marital_status":"X"}]'></textarea>
+
+    <label>Sisters (JSON/Text format):</label>
+    <textarea name="sisters" placeholder='[{"name":"X","education":"X","profession":"X","marital_status":"X"}]'></textarea>
+
+    <label>Paternal Uncles (JSON/Text format):</label>
+    <textarea name="paternal_uncles"></textarea>
+
+    <label>Maternal Uncles (JSON/Text format):</label>
+    <textarea name="maternal_uncles"></textarea>
+</fieldset>
+
+<fieldset>
+    <legend>Religious & Lifestyle</legend>
+    <label>View on Marriage:</label>
+    <input type="text" name="view_on_marriage">
+
+    <label>Maintains Fardh Covering:</label>
+    <select name="fardh_covering">
+        <option value="">Select</option>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+    </select>
+
+    <label>Maintains Distance from Non-Mahram:</label>
+    <select name="distance_non_mahrams">
+        <option value="">Select</option>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+        <option value="I">Improvement needed</option>
+    </select>
+
+    <label>Has Sunnah Beard:</label>
+    <select name="sunnah_beard">
+        <option value="">Select</option>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+    </select>
+
+    <label>Watches TV / Listens to Music:</label>
+    <select name="tv_music">
+        <option value="">Select</option>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+        <option value="I">Improvement needed</option>
+    </select>
+
+    <label>Can Recite Qur'an:</label>
+    <select name="can_recite_quran">
+        <option value="">Select</option>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+        <option value="I">Improvement needed</option>
+    </select>
+
+    <label>Any Physical or Mental Conditions:</label>
+    <select name="physical_mental_conditions">
+        <option value="">Select</option>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+    </select>
+
+    <label>Prays Five Times Daily:</label>
+    <select name="prayers_five_times">
+        <option value="">Select</option>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+    </select>
+
+    <label>Involved in Religious Work:</label>
+    <select name="religious_work">
+        <option value="">Select</option>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+    </select>
+</fieldset>
+
+<fieldset>
+    <legend>Spouse Expectations</legend>
+    <label>Age:</label>
+    <input type="text" name="spouse_age">
+    <label>Skin Tone:</label>
+    <input type="text" name="spouse_skin_tone">
+    <label>Height:</label>
+    <input type="text" name="spouse_height">
+    <label>Weight:</label>
+    <input type="text" name="spouse_weight">
+    <label>Educational Qualification:</label>
+    <input type="text" name="spouse_education">
+    <label>District:</label>
+    <input type="text" name="spouse_district">
+    <label>Current Address:</label>
+    <textarea name="spouse_address"></textarea>
+    <label>Profession:</label>
+    <input type="text" name="spouse_profession">
+    <label>Special Qualities:</label>
+    <textarea name="spouse_special_qualities"></textarea>
+</fieldset>
+
+<fieldset>
+    <legend>Guardian Awareness</legend>
+    <label>Does your guardian know about marriage?</label>
+    <select name="guardian_marriage">
+        <option value="">Select</option>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+    </select>
+
+    <label>Does your guardian know about publishing your biodata?</label>
+    <select name="guardian_publish">
+        <option value="">Select</option>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+    </select>
+</fieldset>
+
+<button type="submit">Save Bio Data</button>
+</form>
+</body>
+</html>

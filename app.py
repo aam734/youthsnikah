@@ -49,7 +49,7 @@ def login():
         c.execute("""
             SELECT * FROM users 
             WHERE email=? AND password=?
-        """, (login, login, password))
+        """, (login, password))
 
         user = c.fetchone()
         conn.close()

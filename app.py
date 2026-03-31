@@ -61,21 +61,22 @@ def login():
         password = request.form['password']
 
         conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row  # ✅ IMPORTANT
         c = conn.cursor()
 
-        # Get user by email
         c.execute("SELECT * FROM users WHERE email=?", (login,))
         user = c.fetchone()
         conn.close()
 
-        user = c.fetchone()
-        conn.close()
+        # ✅ Safe check
+        if user:
+            stored_password = user['password']  # safer than index
 
-        if user and check_password_hash(user[4], password):
-            session['user_id'] = user[0]
-            return redirect('/dashboard')
-        else:
-            return "Invalid credentials"
+            if check_password_hash(stored_password, password):
+                session['user_id'] = user['id']
+                return redirect('/dashboard')
+
+        return "Invalid credentials"
 
     return render_template("login.html")
 

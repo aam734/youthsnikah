@@ -1,0 +1,13 @@
+<h2>Your Profile</h2>
+
+{% if biodata %}
+<p><b>Profile ID:</b> {{ biodata['profile_id'] }}</p>
+<p><b>Gender:</b> {{ biodata['gender'] }}</p>
+<p><b>District:</b> {{ biodata['district'] }}</p>
+<p><b>Age:</b> {{ biodata['current_age'] }}</p>
+
+<a href="/biodata">Edit Profile</a>
+{% else %}
+<p>No biodata found.</p>
+<a href="/biodata">Create Now</a>
+{% endif %}

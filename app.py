@@ -227,7 +227,7 @@ def view_biodata():
 
 # PUBLIC PROFILE
 @app.route('/profile/<profile_id>')
-def public_profile(profile_id):
+def profile(profile_id):
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
@@ -240,7 +240,26 @@ def public_profile(profile_id):
     if not data:
         return "Profile not found"
 
-    return render_template("public_profile.html", biodata=data)
+    # Privacy check
+    if data['guardian_publish'] != 'Y':
+        return "This profile is private"
+
+    return render_template("profile.html", biodata=data)
+
+# PUBLIC PROFILE
+@app.route('/public_profile')
+def public_profile_list():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+
+    # Only public profiles
+    c.execute("SELECT profile_id, gender, district, current_age FROM biodata WHERE guardian_publish='Y'")
+    profiles = c.fetchall()
+
+    conn.close()
+
+    return render_template("public_profile.html", profiles=profiles)
 
 # LAST PORTION
 if __name__ == '__main__':

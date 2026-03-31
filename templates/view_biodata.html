@@ -1,3 +1,21 @@
+<td>
+  <button onclick="openProfile('{{ profile_id }}')">{{ profile_id }}</button>
+</td>
+
+<script>
+function openProfile(id) {
+    const url = `${window.location.origin}/profile/${id}`;
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(url).then(() => {
+        alert('Profile link copied to clipboard!');
+    });
+
+    // Open in new tab
+    window.open(url, '_blank');
+}
+</script>
+
 <h2>Your Profile</h2>
 
 {% if biodata %}

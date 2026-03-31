@@ -225,6 +225,23 @@ def view_biodata():
     conn.close()
     return render_template("view_biodata.html", biodata=data)
 
+# PUBLIC PROFILE
+@app.route('/profile/<profile_id>')
+def public_profile(profile_id):
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM biodata WHERE profile_id=?", (profile_id,))
+    data = c.fetchone()
+
+    conn.close()
+
+    if not data:
+        return "Profile not found"
+
+    return render_template("public_profile.html", biodata=data)
+
 # LAST PORTION
 if __name__ == '__main__':
     app.run(debug=True)

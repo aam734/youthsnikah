@@ -270,6 +270,23 @@ def public_profile_list():
 
     return render_template("public_profile.html", profiles=profiles)
 
+# AUTO-SAVE
+@app.route('/save_biodata_step', methods=['POST'])
+@login_required
+def save_biodata_step():
+    data = request.json
+    user_id = session['user_id']
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+
+    # Update only fields present in the step
+    for key, value in data.items():
+        c.execute(f"UPDATE biodata SET {key}=? WHERE user_id=?", (value, user_id))
+
+    conn.commit()
+    conn.close()
+    return '', 204
+
 # LAST PORTION
 if __name__ == '__main__':
     app.run(debug=True)

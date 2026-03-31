@@ -272,17 +272,34 @@ def public_profile_list():
 
 # AUTO-SAVE
 @app.route('/save_biodata_step', methods=['POST'])
-@login_required
 def save_biodata_step():
+    if 'user_id' not in session:
+        return "Unauthorized", 401
+
     data = request.json
     user_id = session['user_id']
+
+    # List of allowed fields that can be updated
+    allowed_fields = [
+        "gender", "district", "current_age", "marital_status",
+        "father_occupation", "mother_occupation", "permanent_address", "current_address",
+        "date_of_birth", "height", "weight", "blood_group", "skin_tone",
+        "educational_qualification", "profession", "political_view", "religion", "about_yourself",
+        "financial_status", "social_status", "brothers", "sisters", "paternal_uncles", "maternal_uncles",
+        "view_on_marriage", "fardh_covering", "distance_non_mahrams", "sunnah_beard", "tv_music",
+        "can_recite_quran", "physical_mental_conditions", "prayers_five_times", "religious_work",
+        "spouse_age", "spouse_skin_tone", "spouse_height", "spouse_weight", "spouse_education",
+        "spouse_district", "spouse_address", "spouse_profession", "spouse_special_qualities",
+        "guardian_marriage", "guardian_publish"
+    ]
+
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
-    # Update only fields present in the step
     for key, value in data.items():
-        c.execute(f"UPDATE biodata SET {key}=? WHERE user_id=?", (value, user_id))
-
+        if key in allowed_fields:
+            c.execute(f"UPDATE biodata SET {key}=? WHERE user_id=?", (value, user_id))
+    
     conn.commit()
     conn.close()
     return '', 204

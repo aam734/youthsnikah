@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = "secret123"
@@ -11,6 +12,7 @@ DB_PATH = "database/data.db"
 def home():
     return render_template("index.html")
 
+# REGISTER
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -35,11 +37,14 @@ def register():
             conn.close()
             return "Phone number already exists!"
 
+        # HASH PASSWORD
+        hashed_password = generate_password_hash(password)
+
         # INSERT USER
         c.execute("""
             INSERT INTO users (full_name, birth_year, email, phone, password)
             VALUES (?, ?, ?, ?, ?)
-        """, (full_name, birth_year, email, phone, password))
+        """, (full_name, birth_year, email, phone, hashed_password))
 
         conn.commit()
         conn.close()
@@ -47,6 +52,7 @@ def register():
         return redirect('/login')
 
     return render_template("register.html")
+    
 # LOGIN
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -57,15 +63,15 @@ def login():
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
 
-        c.execute("""
-            SELECT * FROM users 
-            WHERE email=? AND password=?
-        """, (login, password))
+        # Get user by email
+        c.execute("SELECT * FROM users WHERE email=?", (login,))
+        user = c.fetchone()
+        conn.close()
 
         user = c.fetchone()
         conn.close()
 
-        if user:
+        if user and check_password_hash(user[4], password):
             session['user_id'] = user[0]
             return redirect('/dashboard')
         else:
